@@ -10,7 +10,7 @@ export default async function Page({
   };
 }) {
   const notion = new NotionAPI();
-  const recordMap = await notion.getPage(rootNotionPageId);
+  const recordMap = await notion.getPage(params.pageId as string);
 
   return (
     <main>
