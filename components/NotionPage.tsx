@@ -3,6 +3,7 @@ import * as React from "react";
 import dynamic from "next/dynamic";
 import { NotionRenderer } from "react-notion-x";
 import { ExtendedRecordMap } from "notion-types";
+import Link from 'next/link'
 // core styles shared by all of react-notion-x (required)
 import "react-notion-x/src/styles.css";
 
@@ -16,10 +17,12 @@ export default function NotionPage({
   recordMap,
   rootPageId,
   rootDomain,
+  pagePrefix,
 }: {
   recordMap: ExtendedRecordMap;
   rootPageId?: string;
   rootDomain?: string;
+  pagePrefix?: string;
 }) {
   const Code = dynamic(() =>
     import("react-notion-x/build/third-party/code").then((m) => m.Code)
@@ -40,6 +43,8 @@ export default function NotionPage({
     }
   );
 
+  const mapPageUrl = (pageId: string) => `${pagePrefix}/${pageId}`;
+
   return (
     <NotionRenderer
       recordMap={recordMap}
@@ -47,7 +52,9 @@ export default function NotionPage({
       fullPage={true}
       rootDomain={rootDomain}
       rootPageId={rootPageId}
+      mapPageUrl={mapPageUrl}
       components={{
+        nextLink: Link,
         Code,
         Collection,
         Equation,
